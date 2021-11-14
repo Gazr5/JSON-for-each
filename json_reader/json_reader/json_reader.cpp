@@ -47,15 +47,13 @@ void getKeyAndValue(json js, std::string path, std::string outputFile) {
 
             value.erase(remove(value.begin(), value.end(), '"'), value.end());
 
-            if (outputFile.empty()) {
-                std::cout << std::string(temp.begin() + 1, temp.end()) << "\t" << value << std::endl;
-            }
-            else {
-                std::fstream output_fstream;
-                output_fstream.open(outputFile, std::ios::app);
-                output_fstream << std::string(temp.begin() + 1, temp.end()) << "\t" << value << std::endl;
-                output_fstream.close();
-            }
+            std::cout << std::string(temp.begin() + 1, temp.end()) << "\t" << value << std::endl;
+            
+            std::fstream output_fstream;
+            output_fstream.open(outputFile, std::ios::app);
+            output_fstream << std::string(temp.begin() + 1, temp.end()) << "\t" << value << std::endl;
+            output_fstream.close();
+            
         }
     }
 }
@@ -67,17 +65,16 @@ int main()
 
     std::cout << "Write the input name" << std::endl;
     std::cin >> inputFile;
-    std::cout << "Write the output name or write 0 if this file is created automatically" << std::endl;
-    std::cin >> outputFile;
 
     json js = json::parse(std::ifstream(inputFile));
     std::string temp = "";
 
-    //if (outputFile == "0") outputFile = "output.txt";
-
     std::ofstream output_fstream;
     output_fstream.open(outputFile, std::ofstream::out | std::ofstream::trunc);
     output_fstream.close();
+
+
+    std::cout << "helo" << std::endl;
 
     getKeyAndValue(js, temp, outputFile);
 }
